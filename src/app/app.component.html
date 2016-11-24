@@ -1,3 +1,20 @@
-<h1>
-  {{title}}
-</h1>
+<h1>Todo List</h1>
+<input #todoInput
+  (keyup.enter)="createTodo(todoInput.value); todoInput.value=''"
+  name="create-todo"
+  type="text" />
+<button (click)="createTodo(todoInput.value); todoInput.value=''">Create new!</button>
+<ul>
+  <li *ngFor="let todo of todos; let i = index">
+    <p>{{todo}}</p>
+    <button (click)="deleteTodo(i)" >
+      Delete
+    </button>
+    <button (click)="changeTodoRank(i, -1)" >
+      Up
+    </button>
+    <button (click)="changeTodoRank(i, 1)" >
+      Down
+    </button>
+  </li>
+</ul>
