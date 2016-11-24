@@ -6,14 +6,15 @@
 <button (click)="createTodo(todoInput.value); todoInput.value=''">Create new!</button>
 <ul>
   <li *ngFor="let todo of todos; let i = index">
-    <p>{{todo}}</p>
+    <p>{{todo.karma}}</p>
+    <p>{{todo.content}}</p>
     <button (click)="deleteTodo(i)" >
       Delete
     </button>
-    <button (click)="changeTodoRank(i, -1)" >
+    <button (click)="todos[i].changeKarma(1)" >
       Up
     </button>
-    <button (click)="changeTodoRank(i, 1)" >
+    <button (click)="todos[i].changeKarma(-1)" >
       Down
     </button>
   </li>
