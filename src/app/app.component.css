@@ -1,0 +1,33 @@
+*{
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+p{
+  margin: 0;
+}
+
+ul{
+  padding: 0;
+}
+
+.todo{
+  display: flex;
+  align-items: center;
+  background-color: aliceblue;
+  border-bottom: 0.2em solid #eaeaea;
+}
+
+.todo-karma{
+  font-size: 2em;
+  color: grey;
+  max-width: 2em;
+  background-color: #fff3e0;
+}
+
+.todo-content{
+  margin-right: 1em;
+}
+
+.todo:last-child{
+  border-bottom: none;
+}

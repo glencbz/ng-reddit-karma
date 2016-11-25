@@ -4,18 +4,24 @@
   name="create-todo"
   type="text" />
 <button (click)="createTodo(todoInput.value); todoInput.value=''">Create new!</button>
+
+app-root{
+  width: 100%;
+}
 <ul>
-  <li *ngFor="let todo of todos; let i = index">
-    <p>{{todo.karma}}</p>
-    <p>{{todo.content}}</p>
-    <button (click)="deleteTodo(i)" >
+  <li class="todo" *ngFor="let todo of todos; let i = index">
+    <div class="todo-karma">
+      <p>{{todo.karma}}</p>
+      <button class="todo-karma-up" (click)="changeTodoKarma(i,1)" >
+        Up
+      </button>
+      <button class="todo-karma-down" (click)="changeTodoKarma(i,-1)" >
+        Down
+      </button>
+    </div>
+    <p class="todo-content">{{todo.content}}</p>
+    <button class="todo-delete" (click)="deleteTodo(i)" >
       Delete
-    </button>
-    <button (click)="todos[i].changeKarma(1)" >
-      Up
-    </button>
-    <button (click)="todos[i].changeKarma(-1)" >
-      Down
     </button>
   </li>
 </ul>
