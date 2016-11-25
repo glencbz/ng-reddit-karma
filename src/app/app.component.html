@@ -1,27 +1,18 @@
-<h1>Todo List</h1>
-<input #todoInput
-  (keyup.enter)="createTodo(todoInput.value); todoInput.value=''"
-  name="create-todo"
+<h1>Thread List</h1>
+<input #threadInput
+  (keyup.enter)="createThread(threadInput.value); threadInput.value=''"
+  name="create-thread"
   type="text" />
-<button (click)="createTodo(todoInput.value); todoInput.value=''">Create new!</button>
+<button (click)="createThread(threadInput.value); threadInput.value=''">Create new!</button>
 
-app-root{
-  width: 100%;
-}
 <ul>
-  <li class="todo" *ngFor="let todo of todos; let i = index">
-    <div class="todo-karma">
-      <p>{{todo.karma}}</p>
-      <button class="todo-karma-up" (click)="changeTodoKarma(i,1)" >
-        Up
-      </button>
-      <button class="todo-karma-down" (click)="changeTodoKarma(i,-1)" >
-        Down
-      </button>
-    </div>
-    <p class="todo-content">{{todo.content}}</p>
-    <button class="todo-delete" (click)="deleteTodo(i)" >
-      Delete
-    </button>
+  <li *ngFor="let thread of threads; let i = index">
+    <app-thread
+      [index]="i"
+      [karma]="thread.karma"
+      [content]="thread.content"
+      (onKarmaClick)="changeThreadKarma($event)"
+      (onDeleteClick)="deleteThread($event)"
+    ></app-thread>
   </li>
 </ul>

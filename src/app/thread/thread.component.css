@@ -1,0 +1,21 @@
+.thread{
+  display: flex;
+  align-items: center;
+  background-color: aliceblue;
+  border-bottom: 0.2em solid #eaeaea;
+}
+
+.thread-karma{
+  font-size: 2em;
+  color: grey;
+  max-width: 2em;
+  background-color: #fff3e0;
+}
+
+.thread-content{
+  margin-right: 1em;
+}
+
+.thread:last-child{
+  border-bottom: none;
+}

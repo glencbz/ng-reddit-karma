@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
+import { ThreadComponent } from './thread/thread.component';
 import * as _ from 'lodash';
 
-class Todo {
-  public karma: number = 0;
-
-  changeKarma(change: number): Todo{
-    this.karma += change;
-    return this;
-  }
-
-  constructor(public content: string){}
+class Thread{
+  karma: number = 0;
+  constructor(public content : string){}
 }
 
 @Component({
@@ -19,22 +14,25 @@ class Todo {
 })
 
 export class AppComponent {
-  todos : Todo[] = [];
+  threads : Thread[] = [];
 
-  createTodo(content: string) : void {
-    if (content)
-      this.todos.push(new Todo(content));
+  createThread(content: string) : void {
+    if (!content)
+      return;
+    var newThread = new Thread(content);
+    this.threads.push(newThread);
   }
 
-  deleteTodo(index: number) : void {
-    this.todos.splice(index, 1);
+  deleteThread(index: number) : void {
+    this.threads.splice(index, 1);
   }
 
-  changeTodoKarma(index: number, change: number) : Todo{
-    var changed = this.todos[index].changeKarma(change);
-    this.todos.splice(index, 1);
-    var insertIndex = _.sortedLastIndexBy(this.todos, changed, t => -t.karma);
-    this.todos.splice(insertIndex, 0, changed);
-    return changed;
+  changeThreadKarma(params: number[]) : void{
+    var [index, change] = params;
+    var changed = this.threads[index];
+    changed.karma += change;
+    this.threads.splice(index, 1);
+    var insertIndex = _.sortedLastIndexBy(this.threads, changed, t => -t.karma);
+    this.threads.splice(insertIndex, 0, changed);
   }
 }

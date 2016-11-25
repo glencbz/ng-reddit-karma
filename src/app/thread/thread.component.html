@@ -1,0 +1,15 @@
+<div class="thread">
+  <div class="thread-karma">
+    <p>{{karma}}</p>
+    <button class="thread-karma-up" (click)="changeKarmaWasClicked(1)" >
+      Up
+    </button>
+    <button class="thread-karma-down" (click)="changeKarmaWasClicked(-1)" >
+      Down
+    </button>
+  </div>
+  <p class="thread-content">{{content}}</p>
+  <button class="thread-delete" (click)="deleteWasClicked()" >
+    Delete
+  </button>
+</div>
