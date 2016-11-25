@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ThreadService } from './thread.service';
 
 @Component({
   selector: 'app-thread',
@@ -10,16 +11,18 @@ export class ThreadComponent {
   @Input() index: number;
   @Input() karma: number = 0;
   @Input() content: string;
-  @Output() onKarmaClick = new EventEmitter<any>();
-  @Output() onDeleteClick = new EventEmitter<any>();
 
   deleteWasClicked(): void{
-    this.onDeleteClick.emit(this.index);
+    if (this.threadService)
+      this.threadService.deleteThread(this.index);
   }
 
   changeKarmaWasClicked(change: number): void{
-    this.onKarmaClick.emit([this.index, change]);
+    if (this.threadService)
+      this.threadService.changeThreadKarma(this.index, change);
+    else
+      this.karma += change;
   }
 
-  constructor(){}
+  constructor(private threadService? : ThreadService){}
 }
