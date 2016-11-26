@@ -12,32 +12,49 @@ import * as _ from 'lodash';
 })
 
 export class AppComponent implements OnInit {
-  private indexAndThreads : any[] = [];
+  private threads : Thread[] = [];
+  private threadAddSubscription: Subscription;
   private karmaChangeSubscription: Subscription;
+  private threadDeleteSubscription: Subscription;
 
   createThread(content: string) : void {
     this.threadService.createThread(content);
-    this.fetchThreads();
+  }
+
+  addThread(newIt : any){
+    console.log(this.threadSortedIndex(newIt));
+    this.threads.splice(this.threadSortedIndex(newIt), 0, newIt);
   }
 
   fetchThreads() : void {
-    this.indexAndThreads = _.sortBy(this.threadService.getThreads(), indAndThread => -(indAndThread[1] as Thread).karma);
+    this.threads = _.sortBy(this.threadService.getThreads(), thread => -thread.karma);
   }
 
   findThreadIndexById(id: number) : number{
-    return _.findIndex(this.indexAndThreads, it => it[0] === id);
+    return _.findIndex(this.threads, thread => thread.id === id);
   }
 
-  changeThreadKarma(id: number, change: number) : void {
-    var target = this.indexAndThreads.splice(this.findThreadIndexById(id), 1);
-    target[1].karma += change;
-    var insertIndex = _.sortedLastIndexBy(this.indexAndThreads, target[1].karma, it => -it[1].karma);
-    this.indexAndThreads.splice(insertIndex, 0, target);
+  threadSortedIndex(target : Thread){
+    return _.sortedLastIndexBy(this.threads, target, thread => -thread.karma);
+  }
+
+  changeThreadKarma(newThread : Thread) : void {
+    var targetIndex = this.findThreadIndexById(newThread.id);
+    this.threads.splice(targetIndex, 1);
+    this.threads.splice(this.threadSortedIndex(newThread), 0, newThread);
+  }
+
+  deleteThread(id: number) : void {
+    _.remove(this.threads, thread => thread.id === id);
   }
 
   ngOnInit() {
+    this.threadAddSubscription = this.threadService.threadAdd$
+        .subscribe(thread => this.addThread(thread));
     this.karmaChangeSubscription = this.threadService.threadChange$
-        .subscribe(([id, change]) => this.changeThreadKarma(id, change));
+        .subscribe(thread => this.changeThreadKarma(thread));
+    this.threadDeleteSubscription = this.threadService.threadDelete$
+        .subscribe(id => this.deleteThread(id));
   }
 
   constructor(private threadService : ThreadService){}

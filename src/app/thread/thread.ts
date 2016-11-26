@@ -1,4 +1,5 @@
 export class Thread{
   karma: number = 0;
-  constructor(public content : string){}
+  constructor(public id : number,
+              public content : string){}
 }

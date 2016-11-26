@@ -6,11 +6,11 @@
 <button (click)="createThread(threadInput.value); threadInput.value=''">Create new!</button>
 
 <ul>
-  <li *ngFor="let indexAndThread of indexAndThreads">
+  <li *ngFor="let thread of threads">
     <app-thread
-      [index]="indexAndThread[0]"
-      [karma]="indexAndThread[1].karma"
-      [content]="indexAndThread[1].content"
+      [index]="thread.id"
+      [karma]="thread.karma"
+      [content]="thread.content"
     ></app-thread>
   </li>
 </ul>

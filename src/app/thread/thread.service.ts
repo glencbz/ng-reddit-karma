@@ -6,30 +6,36 @@ import * as _ from 'lodash';
 @Injectable()
 export class ThreadService {
   private threads : Thread[] = [];
+  private idCounter : number = 0;
+
   private threadAddSubject = new Subject<Thread>();
   threadAdd$ = this.threadAddSubject.asObservable();
-  private threadChangeSubject = new Subject<number[]>();
+  private threadChangeSubject = new Subject<Thread>();
   threadChange$ = this.threadChangeSubject.asObservable();
+  private threadDeleteSubject = new Subject<number>();
+  threadDelete$ = this.threadDeleteSubject.asObservable();
 
   createThread(content: string) : Thread{
     if (!content)
       return;
-    var newThread = new Thread(content);
+    var newThread = new Thread(this.idCounter++, content);
     this.threads.push(newThread);
-    return newThread;
+    this.threadAddSubject.next(_.last(this.threads));
   }
 
-  deleteThread(index: number) : void {
-    this.threads.splice(index, 1);
+  deleteThread(id: number) : void {
+    _.remove(this.threads, it => it.id === id);
+    this.threadDeleteSubject.next(id);
   }
 
-  getThreads() : Array<any>[]{
-    return _.toPairs(this.threads);
+  getThreads() : Thread[]{
+    return this.threads;
   }
 
-  changeThreadKarma(index: number, change: number) : Thread{
-    this.threads[index].karma += change;
-    this.threadChangeSubject.next([index, change]);
-    return this.threads[index];
+  changeThreadKarma(id: number, change: number) : Thread{
+    var target = _.find(this.threads, it => it.id === id);
+    target.karma += change
+    this.threadChangeSubject.next(target);
+    return this.threads[id];
   }
 }
