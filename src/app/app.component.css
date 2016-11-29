@@ -13,3 +13,11 @@ ul{
 li{
   list-style: none;
 }
+
+.app-thread{
+  display: flex;
+  align-items: center;
+  background-color: aliceblue;
+  border-bottom: 0.2em solid #eaeaea;
+}
+

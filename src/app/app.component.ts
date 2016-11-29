@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.threadAddSubscription = this.threadService.threadAdd$
-        .subscribe(thread => this.addThread(thread));
+        .subscribe(thread => this.addThread(thread));// needs to be wrapped in arrow function to avoid binding `this`
     this.karmaChangeSubscription = this.threadService.threadChange$
         .subscribe(thread => this.changeThreadKarma(thread));
     this.threadDeleteSubscription = this.threadService.threadDelete$
