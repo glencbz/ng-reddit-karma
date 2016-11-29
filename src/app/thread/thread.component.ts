@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ThreadService } from './thread.service';
 
 @Component({
-  selector: 'app-thread',
+  selector: '.app-thread',
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.css']
 })

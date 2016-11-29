@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.dataChangeSubscription = this.threadService.dataChange$
-        .subscribe(threads => this.assignThreads(threads));
+        .subscribe(threads => this.assignThreads(threads)); // needs to be wrapped in arrow function to avoid binding `this`
   }
 
   constructor(private threadService : ThreadService){}
